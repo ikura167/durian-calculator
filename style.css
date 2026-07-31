@@ -593,7 +593,7 @@ input[type="number"]:focus {
 
   .proportion-inputs {
     height: 100%;
-    justify-content: space-between;
+    justify-content: start;
   }
 }
 
