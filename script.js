@@ -65,9 +65,6 @@ const displaySettingTotalCost = document.getElementById(
 const inDiscountFaulty = document.getElementById("const-discount-faulty");
 const inMaxHistory = document.getElementById("const-max-history");
 
-const warningGroupAB = document.getElementById("warning-groupAB");
-const warningGroupCDKem = document.getElementById("warning-groupCDKem");
-
 // Form input elements
 const calcForm = document.getElementById("calc-form");
 const inputTotalWeight = document.getElementById("input-total-weight");
@@ -150,7 +147,6 @@ function initSettings() {
   }
 
   populateSettingsInputs(currentSettings);
-  validateSettingsRatios();
 }
 
 function populateSettingsInputs(settings) {
@@ -185,24 +181,24 @@ function updateSettingsCostDisplay() {
   displaySettingTotalCost.textContent = formatCurrency(total);
 }
 
-function validateSettingsRatios() {
-  const sumAB = Number(inRatioABA.value || 0) + Number(inRatioABB.value || 0);
-  const sumCDK =
-    Number(inRatioCDCD.value || 0) + Number(inRatioCDKEM.value || 0);
-
-  if (sumAB !== 100) {
-    warningGroupAB.style.display = "block";
-    warningGroupAB.textContent = `⚠️ Tổng tỉ lệ phải bằng 100%! Hiện tại: ${sumAB}%`;
-  } else {
-    warningGroupAB.style.display = "none";
+function autoBalancePair(inputA, inputB) {
+  function clamp(val) {
+    val = Number(val || 0);
+    if (isNaN(val)) val = 0;
+    return Math.min(100, Math.max(0, val));
   }
 
-  if (sumCDK !== 100) {
-    warningGroupCDKem.style.display = "block";
-    warningGroupCDKem.textContent = `⚠️ Tổng tỉ lệ phải bằng 100%! Hiện tại: ${sumCDK}%`;
-  } else {
-    warningGroupCDKem.style.display = "none";
-  }
+  inputA.addEventListener("input", () => {
+    const valA = clamp(inputA.value);
+    inputA.value = valA;
+    inputB.value = 100 - valA;
+  });
+
+  inputB.addEventListener("input", () => {
+    const valB = clamp(inputB.value);
+    inputB.value = valB;
+    inputA.value = 100 - valB;
+  });
 }
 
 function saveSettings() {
@@ -275,7 +271,6 @@ function resetSettings() {
     localStorage.removeItem(STORAGE_KEY_SETTINGS);
     currentSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
     populateSettingsInputs(currentSettings);
-    validateSettingsRatios();
     updateSettingsCostDisplay();
     showToast("↩️ Đã khôi phục cài đặt mặc định!");
   }
@@ -1041,11 +1036,9 @@ function initEventListeners() {
     input.addEventListener("input", updateSettingsCostDisplay);
   });
 
-  // Settings inputs dynamic warning of 100% ratios
-  const ratioInputs = [inRatioABA, inRatioABB, inRatioCDCD, inRatioCDKEM];
-  ratioInputs.forEach((input) => {
-    input.addEventListener("input", validateSettingsRatios);
-  });
+  // auto balance ratio
+  autoBalancePair(inRatioABA, inRatioABB);
+  autoBalancePair(inRatioCDCD, inRatioCDKEM);
 
   // Save settings button
   btnSaveSettings.addEventListener("click", saveSettings);
