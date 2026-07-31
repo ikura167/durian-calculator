@@ -5,7 +5,7 @@
 // --- CONSTANTS & DEFAULT SETTINGS ---
 const DEFAULT_SETTINGS = {
   prices: {
-    THAI: { A: 70000, B: 50000, CD: 34000, KEM: 17000 },
+    THAI: { A: 72000, B: 52000, CD: 34000, KEM: 17000 },
     RI6: { A: 38000, B: 19000, CD: 16000, KEM: 7000 },
   },
   ratios: {
