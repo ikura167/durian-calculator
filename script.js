@@ -291,7 +291,7 @@ function collapseSettings() {
 }
 
 function expandSettings() {
-  settingsBody.style.maxHeight = "1000px"; // sufficiently large
+  settingsBody.style.maxHeight = "unset"; // sufficiently large
   settingsBody.style.opacity = "1";
   settingsBody.style.padding = "20px";
   btnToggleSettings.setAttribute("aria-expanded", "true");
@@ -839,7 +839,7 @@ function updateHistoryUI() {
       itemEl.innerHTML = `
                 <div class="history-item-summary">
                     <div class="history-item-info">
-                        <div class="history-item-title">${varText} - ${formatWeight(item.inputs.totalWeight)} Tấn (Vườn: ${ratioText})</div>
+                        <div class="history-item-title">${varText} - ${formatWeight(item.inputs.totalWeight)} Kg (Vườn: ${ratioText})</div>
                         <div class="history-item-meta">🕒 ${item.timestamp.split(" ")[0]} | Giá mua: ${formatNumberOnly(item.inputs.realPrice)}đ/kg</div>
                     </div>
                     <div class="history-item-actions">
@@ -946,15 +946,15 @@ function copyResultsToClipboard(e) {
   const message = `=== BÁO CÁO THU MUA SẦU RIÊNG ===
 Thời gian: ${rec.timestamp}
 Giống: ${varietyName}
-Tổng sản lượng: ${formatWeight(rec.inputs.totalWeight)} TẤN
+Tổng sản lượng: ${formatWeight(rec.inputs.totalWeight)} Kg
 Tỷ lệ vườn: ${ratioText}
 Giá mua tại vườn: ${formatNumberOnly(rec.inputs.realPrice)} đ/kg
 ------------------------------
 BÁN KHO DỰ KIẾN:
-- Hàng A: ${formatWeight(w.A)} Tấn x ${formatNumberOnly(p.A)}đ = ${formatCurrency(rev.A)}
-- Hàng B: ${formatWeight(w.B)} Tấn x ${formatNumberOnly(p.B)}đ = ${formatCurrency(rev.B)}
-- Hàng C,D (Dạt): ${formatWeight(w.CD)} Tấn x ${formatNumberOnly(p.CD)}đ = ${formatCurrency(rev.CD)}
-- Hàng Kem: ${formatWeight(w.KEM)} Tấn x ${formatNumberOnly(p.KEM)}đ = ${formatCurrency(rev.KEM)}
+- Hàng A: ${formatWeight(w.A)} Kg x ${formatNumberOnly(p.A)}đ = ${formatCurrency(rev.A)}
+- Hàng B: ${formatWeight(w.B)} Kg x ${formatNumberOnly(p.B)}đ = ${formatCurrency(rev.B)}
+- Hàng C,D (Dạt): ${formatWeight(w.CD)} Kg x ${formatNumberOnly(p.CD)}đ = ${formatCurrency(rev.CD)}
+- Hàng Kem: ${formatWeight(w.KEM)} Kg x ${formatNumberOnly(p.KEM)}đ = ${formatCurrency(rev.KEM)}
 => TỔNG DOANH THU: ${formatCurrency(rec.results.totalRevenue)}
 
 CHI PHÍ LÔ HÀNG:
