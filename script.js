@@ -9,7 +9,7 @@ const DEFAULT_SETTINGS = {
     RI6: { A: 38000, B: 19000, CD: 16000, KEM: 7000 },
   },
   ratios: {
-    groupAB: { A: 60, B: 40 },
+    groupAB: { A: 70, B: 30 },
     groupCDKem: { CD: 80, KEM: 20 },
   },
   costs: {
